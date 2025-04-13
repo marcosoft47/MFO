@@ -26,8 +26,8 @@ module revisao{
 
     // Escreva um operador que recebe uma lista e retorna um mapa onde as chaves são os elementos da lista,
     // e os valores são inteiros representando a quantidade de ocorrências daquele elemento na lista.
-    pure def atv5(s)={
+    // pure def atv5(s)={
         
-    }
+    // }
 
 }
