@@ -1,7 +1,7 @@
 module pokemon {
   import basicSpells.* from "../spells/basicSpells"
 
-  type PokemonType = Water | Fire | Grass
+  type PokemonType = Water | Fire | Grass | Electric
   type DamageModifier = SuperEffective | NotVeryEffective | Normal
 
   type Pokemon = {
@@ -15,7 +15,8 @@ module pokemon {
   pure val POKEMONS = Set(
     { name: "Squirtle", hp: 44, speed: 43, team: "", pokemon_type: Water },
     { name: "Bulbasaur", hp: 45, speed: 45, team: "", pokemon_type: Grass },
-    { name: "Charmander", hp: 39, speed: 65, team: "", pokemon_type: Fire }
+    { name: "Charmander", hp: 39, speed: 65, team: "", pokemon_type: Fire },
+    { name: "Pikachu", hp: 35, speed: 90, team: "", pokemon_type: Electric }
   )
 
   var pokemons: str -> Pokemon
@@ -40,16 +41,25 @@ module pokemon {
           | Water => NotVeryEffective
           | Fire => SuperEffective
           | Grass => NotVeryEffective
+          | Electric => Normal
         }
         | Fire => match receiver.pokemon_type {
           | Water => NotVeryEffective
           | Fire => NotVeryEffective
           | Grass => SuperEffective
+          | Electric => Normal
         }
         | Grass => match receiver.pokemon_type {
           | Water => SuperEffective
           | Fire => NotVeryEffective
           | Grass => NotVeryEffective
+          | Electric => Normal
+        }
+        | Electric => match receiver.pokemon_type{
+          | Water => SuperEffective
+          | Fire => Normal
+          | Grass => NotVeryEffective
+          | Electric => NotVeryEffective
         }
       }
   }
@@ -107,4 +117,9 @@ module pokemon {
   }
 
   val inv = pokemons.values().forall(p => p.hp > 0)
+
+  val flamethrowSpam = pokemons.values().map(p => p.pokemon_type) == Set(Fire, Grass) implies 
+  pokemons.values().
+  filter(p=> p.pokemon_type == Fire).
+  forall(p=> p.hp > 0)
 }
