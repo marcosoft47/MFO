@@ -87,9 +87,12 @@ module pokemon {
       attacker != receiver,
       attacker.hp > 0,
       receiver.hp > 0,
-      any {
-        tackle(attacker, receiver),
-        elemental_attack(attacker, receiver),
+
+      // Um pokemon sempre irá usar um ataque efetivo contra o pokemon oponente
+      if (damage_modifier(attacker, receiver) == SuperEffective){
+        elemental_attack(attacker, receiver)
+      } else {
+        tackle(attacker, receiver)
       }
     }
   }
