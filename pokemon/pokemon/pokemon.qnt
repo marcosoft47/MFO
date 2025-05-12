@@ -1,3 +1,5 @@
+// Dupla: Kalyl Henings, Marco Antonio Reche Rigon
+
 module pokemon {
   import basicSpells.* from "../spells/basicSpells"
 
